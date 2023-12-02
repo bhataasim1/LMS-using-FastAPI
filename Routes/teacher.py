@@ -17,7 +17,7 @@ async def register(request: Request):
 
     existing_user = await Teacher.get_or_none(username=username)
     if existing_user:
-        return templates.TemplateResponse("register.html", {"request": request, "error": "User already exists"})
+        return templates.TemplateResponse("registerTeacher.html", {"request": request, "error": "User already exists"})
 
     await Teacher.create(name=name, username=username, password=password)
 
@@ -33,9 +33,9 @@ async def login(request: Request):
 
     user = await Teacher.filter(username=username).first()
     if not user:
-        return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid Credentials"})
+        return templates.TemplateResponse("loginTeacher.html", {"request": request, "error": "Invalid Credentials"})
 
     if user.password != password:
-        return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid Credentials"})
+        return templates.TemplateResponse("loginTeacher.html", {"request": request, "error": "Invalid Credentials"})
 
     return RedirectResponse(url="/course/allcourses", status_code=302)
